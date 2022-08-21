@@ -9,4 +9,5 @@
 
 #### Páginas web a utilizar:
     * ec.indeed.com
-    * 
+    * ec.jooble.org
+    *

@@ -261,34 +261,35 @@ puts " "
 linkDev='https://ec.jooble.org/SearchResult?p=2&ukw=developer&withSalary=true'
 sDev=analisis5(linkDev)
 promDev=calcProm(sDev)
-puts "Salario mensual promedio de un desarrollador (remoto): #{promDev}"
+puts "Salario mensual promedio de un desarrollador (remoto): $#{promDev}"
 #Asistentes de administración
 linkAdm='https://ec.jooble.org/SearchResult?ukw=asistente&withSalary=true'
 sAdm=analisis5(linkAdm)
 promAdm=calcProm(sAdm)
-puts "Salario mensual promedio de un asistente de administración: #{promAdm}"
+puts "Salario mensual promedio de un asistente de administración: $#{promAdm}"
 #Contador/Auditor
 linkCAud='https://ec.jooble.org/SearchResult?ukw=contador&withSalary=true'
 sCAud=analisis5(linkCAud)
 promCAud=calcProm(sCAud)
-puts "Salario mensual promedio de un contador/auditor: #{promCAud}"
+puts "Salario mensual promedio de un contador/auditor: $#{promCAud}"
 #Vendedores
 linkVen='https://ec.jooble.org/SearchResult?ukw=vendedor&withSalary=true'
 sVen=analisis5(linkVen)
 promVen=calcProm(sVen)
-puts "Salario mensual promedio de un vendedor: #{promVen}"
+puts "Salario mensual promedio de un vendedor: $#{promVen}"
 #Técnicos mecánicos
 linkMec='https://ec.jooble.org/SearchResult?ukw=t%C3%A9cnico%20mec%C3%A1nico&withSalary=true'
 sMec=analisis5(linkMec)
 promMec=calcProm(sMec)
-puts "Salario mensual promedio de un técnico mecánico: #{promMec}"
+puts "Salario mensual promedio de un técnico mecánico: $#{promMec}"
 #Recepcionistas/atención al cliente
 linkAC='https://ec.jooble.org/SearchResult?ukw=recepcionista&withSalary=true'
 sAC=analisis5(linkAC)
 promAC=calcProm(sAC)
-puts "Salario mensual promedio de un recepcionista/personal de atención al cliente: #{promAC}"
+puts "Salario mensual promedio de un recepcionista/personal de atención al cliente: $#{promAC}"
 
-puts "---> Pregunta 6 - Gabriela Sosa"
+puts "   "
+puts "---> Pregunta 6"
 puts " "
 linkTTrab='https://ec.indeed.com/jobs?q=inform%C3%A1tica&l=Guayaquil%2C%20Provincia%20del%20Guayas&sort=date&vjk=9ba3212fbfed1452'
 arrTT=analisis6(linkTTrab)

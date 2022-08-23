@@ -2,9 +2,125 @@ require 'open-uri'
 require 'nokogiri' 
 require 'csv' 
 
-puts ('Scraping integrante 1 - ')
+puts ('Scraping integrante 1 - Lizbeth Vergara')
 puts ('-----------------------------------------------------------')
 
+# ¿En qué ciudad de ecuador existe mayor oferta de empleo acerca de x (que podría ser ingresado) puesto de trabajo? 
+def consultaUno
+pagina = 'https://ec.jooble.org/SearchResult?p=4&ukw=desarrollo%20web'
+datosHTML = URI.open(pagina)
+datosStr = datosHTML.read
+parsed_content = Nokogiri::HTML(datosStr)
+l = []
+ciudades = []
+ciudadesFinal = []
+contadorCiudades = []
+my_hash = {}
+con = 0
+parsed_content.css("//div[@class='infinite-scroll-component uPUK9D _serpContentBlock']").css('div').css('article').each do |datos|
+  t = datos.css('section').css('div')[2].css('div').css('div')[4].to_s.split('>')[1].to_s.split('<')[0]
+
+  ciudades.push(t.to_s.split(",")[0])
+end
+ciudades.each do |c|
+  con = 0
+  ciudades.each do |ciu|
+    if ciu == c
+      con= con + 1
+    end
+  end
+  my_hash[c] = con
+end
+return my_hash
+end
+uno = consultaUno()
+puts 'Provincias en ecuador en donde existen trabajos de desarrollo web '
+puts uno
+puts
+puts
+
+
+# ¿Cuáles son las empresas destacadas que están enlazadas con la plataforma? 
+
+def consultaDos
+  pagina = 'https://ec.jooble.org/SearchResult?p=2&ukw=programador%20junior'
+  datosHTML = URI.open(pagina)
+  datosStr = datosHTML.read
+  parsed_content = Nokogiri::HTML(datosStr)
+  l = ['developer', 'programador', 'desarrollador', 'programmer']
+  informacion = []
+  linkTemporal = ''
+  ofertaTemporal = ''
+  oferta = ''
+  ofertaJunior = ''
+  ciudadTemporal = ''
+  empresaTemporal = ''
+  temp = false
+  my_hash = {}
+
+  parsed_content.css("//div[@class='infinite-scroll-component uPUK9D _serpContentBlock']").css('div').css('article').each do |datos|
+    t = datos.css('section').css('div')[2].css('div').css('div')[4]
+    ciudadTemporal = t.to_s.split('>')[1].to_s.split('<')[0].to_s.split('(')[0]
+    empresaTemporal = datos.css('section').css('div')[2].css('div').css('div')[2].to_s.split('>')[2].to_s.split('<')[0]
+    datos.css('header').css('div').css('h2').css('a').each do |busqueda|
+      linkTemporal = busqueda.attr('href')
+      ofertaTemporal = busqueda.css('span').inner_text
+      oferta = ofertaTemporal if ( ofertaTemporal.downcase[l[0]] || ofertaTemporal.downcase[l[1]] || ofertaTemporal.downcase[l[2]] || ofertaTemporal.downcase[l[3]]  )
+      if (oferta.downcase['junior'])
+        ofertaJunior = oferta if (oferta.downcase['junior'])
+        informacion.push(linkTemporal)
+        informacion.push(ofertaJunior)
+        informacion.push(ciudadTemporal)
+        temp = true
+      else
+        temp = false
+      end  
+      if(temp)
+         my_hash[empresaTemporal] = informacion
+        informacion = []
+      else
+        informacion = []
+      end  
+    end
+  end
+  return my_hash
+end
+dos = consultaDos()
+puts 
+puts 'Empresas que necesiten programadores Junior:  '
+puts dos
+puts
+puts
+
+# ¿Qué empresas tienen ofertas de trabajos remotos? 
+def consultaTres
+  pagina = 'https://ec.jooble.org/SearchResult?loc=2&ukw=desarrollo%20web'
+  datosHTML = URI.open(pagina)
+  datosStr = datosHTML.read
+  parsed_content = Nokogiri::HTML(datosStr)
+  link = ''
+  empresa = ''
+  tiempo = ''
+  my_hash = {}
+parsed_content.css("//div[@class='infinite-scroll-component uPUK9D _serpContentBlock']").css('div').css('article').each do |datos|
+    datos.css('header').css('div').css('h2').css('a').each do |busqueda|
+      link =  busqueda.attr('href')
+      # puts link
+    end  
+    empresa = datos.css('section').css('div')[4].css('p').inner_text
+    tiempo = datos.css('section').css('div')[4].css('div').css('div')[5].css('div').inner_text
+    # puts empresa
+    my_hash[empresa] = [link,tiempo]
+  end      
+  return my_hash           
+        
+end
+tres = consultaTres()
+puts 
+puts 'Empresas que ofrecen trabajos remotos en desarrollo web y hace cuando fue publicado: '
+puts tres
+puts
+puts
 
 
 

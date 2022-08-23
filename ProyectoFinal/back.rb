@@ -123,16 +123,6 @@ puts
 puts
 
 
-
-
-
-
-
-
-
-
-
-
 puts " "
 puts " "
 puts ('Scraping integrante 2 - Gabriela Sosa Casal')

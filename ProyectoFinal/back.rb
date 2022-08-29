@@ -253,7 +253,6 @@ def porcentaje(vCalc,vTotal)
   return div.round(2)
 end
 #Ejecuciones de análisis - Gabriela Sosa
-
 puts "---> Pregunta 4 - Ofertas de trabajo en la última semana en Quito y Guayaquil, separadas por áreas"
 puts " "
 puts "**** Guayaquil ****"

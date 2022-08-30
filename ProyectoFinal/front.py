@@ -58,7 +58,7 @@ def back_p6():
     main.show()
 
 #Funcionalidad
-main.pushButton.clicked.connect(mapa1)
+main.pushButton.clicked.connect(mapa1.abrirMapa)
 main.pushButton.clicked.connect(pantalla1)
 main.pushButton_2.clicked.connect(pantalla2)
 

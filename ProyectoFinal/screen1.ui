@@ -46,7 +46,7 @@ font: 75 23pt &quot;Comic Sans MS&quot;;
 </string>
     </property>
     <property name="text">
-     <string>Gráfico de barras agrupadas</string>
+     <string>Mapa de calor</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_3">

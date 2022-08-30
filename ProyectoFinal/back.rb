@@ -262,7 +262,9 @@ def porcentaje(vCalc,vTotal)
   div=mult/vTotal
   return div.round(2)
 end
+
 #Ejecuciones de análisis - Gabriela Sosa
+
 puts "---> Pregunta 4 - Ofertas de trabajo en la última semana en Quito y Guayaquil, separadas por áreas"
 puts " "
 puts "**** Guayaquil ****"
@@ -434,3 +436,46 @@ puts "Representación en porcentajes"
 puts "Tiempo completo: #{porcComp}%"
 puts "Medio tiempo: #{porcMedio}%"
 puts "Prácticas: #{porcPrac}%"
+
+#Pregunta 4
+preg4="Pregunta4"
+
+#Pregunta 5
+preg5="Pregunta5"
+
+#Pregunta 6
+preg6="Pregunta6"
+
+pregs=Array.new
+pregs.push(preg4)
+pregs.push(preg5)
+pregs.push(preg6)
+
+
+#Guardar datos extraídos en un archivo cvs con la información para una fácil lectura en python
+i=1
+pregs.each do |preg|
+  estado=true
+  CSV.foreach('datos.csv') do |fila|
+    if(fila.include?(preg))
+      estado=false
+    end
+  end
+  CSV.open('datos.csv', 'ab') do |csv|
+    if(estado)
+      if(i==1)
+        #formato -> pregunta,resultadoGye,resultadoQio
+        csv<<[preg,resultadoGI,resultadoGA,resultadoGL,resultadoGV,resultadoGT,resultadoGS,resultadoQI,resultadoQA,resultadoQL,resultadoQV,resultadoQT,resultadoQS]
+      end
+      if(i==2)
+        #formato -> pregunta,promedios
+        csv<<[preg,promDev,promAdm,promCAud,promVen,promMec,promAC]
+      end
+      if(i==3)
+        #formato -> pregunta,porcentajes
+        csv<<[preg,porcComp,porcMedio,porcPrac]
+      end
+    end
+  end
+  i=i+1
+end

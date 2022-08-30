@@ -7,31 +7,41 @@ puts ('-----------------------------------------------------------')
 
 # ¿En qué ciudad de ecuador existe mayor oferta de empleo acerca de x (que podría ser ingresado) puesto de trabajo? 
 def consultaUno
-pagina = 'https://ec.jooble.org/SearchResult?p=4&ukw=desarrollo%20web'
-datosHTML = URI.open(pagina)
-datosStr = datosHTML.read
-parsed_content = Nokogiri::HTML(datosStr)
-l = []
-ciudades = []
-ciudadesFinal = []
-contadorCiudades = []
-my_hash = {}
-con = 0
-parsed_content.css("//div[@class='infinite-scroll-component uPUK9D _serpContentBlock']").css('div').css('article').each do |datos|
-  t = datos.css('section').css('div')[2].css('div').css('div')[4].to_s.split('>')[1].to_s.split('<')[0]
-
-  ciudades.push(t.to_s.split(",")[0])
-end
-ciudades.each do |c|
+  pagina = 'https://ec.jooble.org/SearchResult?p=4&ukw=desarrollo%20web'
+  datosHTML = URI.open(pagina)
+  datosStr = datosHTML.read
+  parsed_content = Nokogiri::HTML(datosStr)
+  l = []
+  ciudades = []
+  ciudadesFinal = []
+  contadorCiudades = []
+  my_hash = {}
   con = 0
-  ciudades.each do |ciu|
-    if ciu == c
-      con= con + 1
-    end
+  parsed_content.css("//div[@class='infinite-scroll-component uPUK9D _serpContentBlock']").css('div').css('article').each do |datos|
+    t = datos.css('section').css('div')[2].css('div').css('div')[4].to_s.split('>')[1].to_s.split('<')[0]
+    
+    ciudades.push(t.to_s.split(",")[0])
+   
   end
-  my_hash[c] = con
-end
-return my_hash
+  # puts ciudades
+  encabezado = ['ciudad','pais']
+  CSV.open('analisis1.csv', 'w+', write_headers: true, headers: encabezado) do |csv|
+    ciudades.each do |c|  
+                csv << [c, ' Ecuador']
+
+    end
+  end  
+  ciudades.each do |c|
+    con = 0
+    ciudades.each do |ciu|
+      if ciu == c
+        con= con + 1
+      end
+    end
+    my_hash[c] = con
+    
+  end
+  return my_hash
 end
 uno = consultaUno()
 puts 'Provincias en ecuador en donde existen trabajos de desarrollo web '
@@ -47,7 +57,7 @@ def consultaDos
   datosHTML = URI.open(pagina)
   datosStr = datosHTML.read
   parsed_content = Nokogiri::HTML(datosStr)
-  l = ['developer', 'programador', 'desarrollador', 'programmer']
+  l = %w[developer programador desarrollador programmer]
   informacion = []
   linkTemporal = ''
   ofertaTemporal = ''
@@ -62,30 +72,35 @@ def consultaDos
     t = datos.css('section').css('div')[2].css('div').css('div')[4]
     ciudadTemporal = t.to_s.split('>')[1].to_s.split('<')[0].to_s.split('(')[0]
     empresaTemporal = datos.css('section').css('div')[2].css('div').css('div')[2].to_s.split('>')[2].to_s.split('<')[0]
-    datos.css('header').css('div').css('h2').css('a').each do |busqueda|
-      linkTemporal = busqueda.attr('href')
+    # puts datos.css('header').css('div')
+    datos.css('header').css('div').each do |busqueda|
+      # puts busqueda
+      # linkTemporal = busqueda.attr('href')
+      
       ofertaTemporal = busqueda.css('span').inner_text
-      oferta = ofertaTemporal if ( ofertaTemporal.downcase[l[0]] || ofertaTemporal.downcase[l[1]] || ofertaTemporal.downcase[l[2]] || ofertaTemporal.downcase[l[3]]  )
-      if (oferta.downcase['junior'])
-        ofertaJunior = oferta if (oferta.downcase['junior'])
-        informacion.push(linkTemporal)
+      if ofertaTemporal.downcase[l[0]] || ofertaTemporal.downcase[l[1]] || ofertaTemporal.downcase[l[2]] || ofertaTemporal.downcase[l[3]]
+        oferta = ofertaTemporal
+        end
+      if oferta.downcase['junior']
+        ofertaJunior = oferta if oferta.downcase['junior']
         informacion.push(ofertaJunior)
         informacion.push(ciudadTemporal)
         temp = true
       else
         temp = false
-      end  
-      if(temp)
-         my_hash[empresaTemporal] = informacion
+      end
+      if temp
+        my_hash[empresaTemporal] = informacion
         informacion = []
       else
         informacion = []
-      end  
+      end
     end
   end
-  return my_hash
+  my_hash
 end
-dos = consultaDos()
+dos = consultaDos
+
 puts 
 puts 'Empresas que necesiten programadores Junior:  '
 puts dos
@@ -102,21 +117,16 @@ def consultaTres
   empresa = ''
   tiempo = ''
   my_hash = {}
-parsed_content.css("//div[@class='infinite-scroll-component uPUK9D _serpContentBlock']").css('div').css('article').each do |datos|
-    datos.css('header').css('div').css('h2').css('a').each do |busqueda|
-      link =  busqueda.attr('href')
-      # puts link
-    end  
+  parsed_content.css("//div[@class='infinite-scroll-component uPUK9D _serpContentBlock']").css('div').css('article').each do |datos|
+    link = datos.css('header').css('h2').css('div').css('a').attr('href').inner_text
     empresa = datos.css('section').css('div')[4].css('p').inner_text
     tiempo = datos.css('section').css('div')[4].css('div').css('div')[5].css('div').inner_text
-    # puts empresa
-    my_hash[empresa] = [link,tiempo]
-  end      
-  return my_hash           
-        
+    my_hash[empresa] = [link, tiempo]
+  end
+  my_hash
 end
-tres = consultaTres()
-puts 
+tres = consultaTres
+puts  
 puts 'Empresas que ofrecen trabajos remotos en desarrollo web y hace cuando fue publicado: '
 puts tres
 puts

@@ -11,4 +11,11 @@
     * ec.indeed.com
     * ec.jooble.org
 
-##### MainVentana.py es el archivo a ejecutar para poder realizar la visualización de las gráficas de los análisis
+## MainVentana.py es el archivo a ejecutar para poder realizar la visualización de las gráficas de los análisis
+
+#### Requerimientos:
+    - Python
+    - PyQt5 y sus tools
+    - Ruby
+    - Matplotlib
+    - Numpy

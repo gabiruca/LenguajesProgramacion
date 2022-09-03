@@ -32,13 +32,6 @@ class Ui_analisis6(object):
 "font: 75 23pt \"Comic Sans MS\";\n"
 "")
         self.label.setObjectName("label")
-        self.pushButton_3 = QtWidgets.QPushButton(self.centralwidget, clicked= lambda: self.hide())
-        self.pushButton_3.setGeometry(QtCore.QRect(30, 30, 101, 31))
-        self.pushButton_3.setStyleSheet("background-color: rgb(255, 255, 255);\n"
-"color: rgb(150, 129, 255);\n"
-"font: 60 12pt \"Rockwell\";\n"
-"border-color: rgb(180, 126, 255);")
-        self.pushButton_3.setObjectName("pushButton_3")
         self.label_2 = QtWidgets.QLabel(self.centralwidget)
         self.label_2.setGeometry(QtCore.QRect(170, 80, 751, 71))
         self.label_2.setStyleSheet("color:rgb(150, 129, 255);\n"
@@ -64,7 +57,7 @@ class Ui_analisis6(object):
         #end plot
 
         self.pushButton_4 = QtWidgets.QPushButton(self.centralwidget,clicked=lambda: self.plotOnCanvas())
-        self.pushButton_4.setGeometry(QtCore.QRect(30, 70, 101, 31))
+        self.pushButton_4.setGeometry(QtCore.QRect(70, 60, 101, 31))
         self.pushButton_4.setStyleSheet("background-color: rgb(255, 255, 255);\n"
 "color: rgb(150, 129, 255);\n"
 "font: 60 12pt \"Rockwell\";\n"
@@ -86,21 +79,24 @@ class Ui_analisis6(object):
         _translate = QtCore.QCoreApplication.translate
         analisis6.setWindowTitle(_translate("analisis6", "graficaPastel"))
         self.label.setText(_translate("analisis6", "Gráfica pastel"))
-        self.pushButton_3.setText(_translate("analisis6", "Regresar"))
         self.label_2.setText(_translate("analisis6", "Ofertas de trabajo informática: Jornadas de trabajo (Gye)"))
         self.pushButton_4.setText(_translate("analisis6", "Graficar"))
 
     def plotOnCanvas(self):
         self.figure.clear()
-        fruits=['Apple','Oranges','Coconuts','Pawpaw']
-        values=random.randint(50, size=(4))
-
-        plt.bar(fruits,values,color='red',width=0.4)
-        plt.xlabel("type of fruits")
-        plt.ylabel("Quantity")
-        plt.title("Random fruits in my basket")
-
-        #self.canvas.draw()
+        with open('datos.csv','rt')as f:
+                data = csv.reader(f)
+                for row in data:
+                        if(row.count('Pregunta6')):
+                                values=row[1:]
+        valores = [eval(i) for i in values]
+        labels = ["Tiempo completo", "Medio tiempo", "Pasantías"]
+        colors = ["green","orange","purple"]
+        plt.pie(valores, labels=labels, autopct="%0.1f %%", colors=colors)
+        plt.axis("equal")
+        plt.title("Integrante - Gabriela Sosa")
+        self.label_3.setText("Un estudiante de Espol tiene 4.1% de posibilidad de encontrar un empleo -medio tiempo, en Guayaquil-.")
+        self.canvas.draw()
 
 
 if __name__ == "__main__":

@@ -32,13 +32,6 @@ class Ui_analisis5(object):
 "font: 75 23pt \"Comic Sans MS\";\n"
 "")
         self.label.setObjectName("label")
-        self.pushButton_3 = QtWidgets.QPushButton(self.centralwidget,clicked= lambda: self.hide())
-        self.pushButton_3.setGeometry(QtCore.QRect(30, 30, 101, 31))
-        self.pushButton_3.setStyleSheet("background-color: rgb(255, 255, 255);\n"
-"color: rgb(150, 129, 255);\n"
-"font: 60 12pt \"Rockwell\";\n"
-"border-color: rgb(180, 126, 255);")
-        self.pushButton_3.setObjectName("pushButton_3")
         self.label_2 = QtWidgets.QLabel(self.centralwidget)
         self.label_2.setGeometry(QtCore.QRect(220, 80, 621, 71))
         self.label_2.setStyleSheet("color:rgb(150, 129, 255);\n"
@@ -64,7 +57,7 @@ class Ui_analisis5(object):
         #end plot
 
         self.pushButton_4 = QtWidgets.QPushButton(self.centralwidget,clicked= lambda: self.plotOnCanvas())
-        self.pushButton_4.setGeometry(QtCore.QRect(30, 70, 101, 31))
+        self.pushButton_4.setGeometry(QtCore.QRect(70, 60, 101, 31))
         self.pushButton_4.setStyleSheet("background-color: rgb(255, 255, 255);\n"
 "color: rgb(150, 129, 255);\n"
 "font: 60 12pt \"Rockwell\";\n"
@@ -86,19 +79,26 @@ class Ui_analisis5(object):
         _translate = QtCore.QCoreApplication.translate
         analisis5.setWindowTitle(_translate("analisis5", "MainWindow"))
         self.label.setText(_translate("analisis5", "Gráfico de barras"))
-        self.pushButton_3.setText(_translate("analisis5", "Regresar"))
         self.label_2.setText(_translate("analisis5", "Ofertas de trabajo por áreas: salarios promedios"))
         self.pushButton_4.setText(_translate("analisis5", "Graficar"))
 
     def plotOnCanvas(self):
         self.figure.clear()
-        colors='red','cyan'
-        #labels=['Gye: Informática','Qio: Informática','Gye: administración','Qio: Administración','Gye: Logística','Qio: Logística','Gye: Ventas','Qio: Ventas','Gye: Turismo','Qio: Turismo','Gye: Salud','Qio: Salud']
-        #values
-        #plt.bar(labels,valuesGye,color=colors,width=0.4)
-        plt.xlabel("Área de trabajo por ciudad")
-        plt.ylabel("Cantidad de empleos")
-        #plt.title("Random fruits in my basket")
+        colors='purple', 'red','pink', 'yellow', 'blue','cyan'
+        labels=['Desarrollador',' A. administración','Contador','Vendedor','Técnico mecánico','Recepcionista']
+        with open('datos.csv','rt')as f:
+                data = csv.reader(f)
+                for row in data:
+                        if(row.count('Pregunta5')):
+                                values=row[1:]
+        valuesGye = [eval(i) for i in values]
+        plt.bar(labels,valuesGye,color=colors,width=0.5)
+        plt.xlabel("Ofertas de empleo en Guayaquil o remoto")
+        plt.ylabel("Salario promedio (ec.jooble.com)")
+        plt.title("Integrante - Gabriela Sosa")
+        self.label_3.setText("El trabajo mejor remunerado en Guayaquil o de forma remota es el de desarrollador.")
+        self.canvas.draw()
+        
 
 
 

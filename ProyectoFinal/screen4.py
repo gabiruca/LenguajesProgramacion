@@ -34,13 +34,6 @@ class Ui_analisis4(object):
 "font: 75 23pt \"Comic Sans MS\";\n"
 "")
         self.label.setObjectName("label")
-        self.pushButton_3 = QtWidgets.QPushButton(self.centralwidget,clicked= lambda: self.hide())
-        self.pushButton_3.setGeometry(QtCore.QRect(30, 30, 101, 31))
-        self.pushButton_3.setStyleSheet("background-color: rgb(255, 255, 255);\n"
-"color: rgb(150, 129, 255);\n"
-"font: 60 12pt \"Rockwell\";\n"
-"border-color: rgb(180, 126, 255);")
-        self.pushButton_3.setObjectName("pushButton_3")
         self.label_2 = QtWidgets.QLabel(self.centralwidget)
         self.label_2.setGeometry(QtCore.QRect(210, 80, 641, 71))
         self.label_2.setStyleSheet("color:rgb(150, 129, 255);\n"
@@ -70,7 +63,7 @@ class Ui_analisis4(object):
         #end plot
         #mostrar plot
         self.pushButton_4 = QtWidgets.QPushButton(self.centralwidget,clicked= lambda: self.plotOnCanvas())
-        self.pushButton_4.setGeometry(QtCore.QRect(30, 70, 101, 31))
+        self.pushButton_4.setGeometry(QtCore.QRect(70, 60, 101, 31))
         self.pushButton_4.setStyleSheet("background-color: rgb(255, 255, 255);\n"
 "color: rgb(150, 129, 255);\n"
 "font: 60 12pt \"Rockwell\";\n"
@@ -93,7 +86,6 @@ class Ui_analisis4(object):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.label.setText(_translate("MainWindow", "Gráfico de barras agrupadas"))
-        self.pushButton_3.setText(_translate("MainWindow", "Regresar"))
         self.label_2.setText(_translate("MainWindow", "Ofertas de trabajo por áreas: Guayaquil vs. Quito"))
         self.pushButton_4.setText(_translate("MainWindow", "Graficar"))
 

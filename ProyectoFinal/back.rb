@@ -5,7 +5,7 @@ require 'csv'
 puts ('Scraping integrante 1 - Lizbeth Vergara')
 puts ('-----------------------------------------------------------')
 
-# ¿En qué ciudad de ecuador existe mayor oferta de empleo acerca de x (que podría ser ingresado) puesto de trabajo? 
+# # ¿En qué ciudad de ecuador existe mayor oferta de empleo acerca de x (que podría ser ingresado) puesto de trabajo? 
 def consultaUno
   pagina = 'https://ec.jooble.org/SearchResult?p=4&ukw=desarrollo%20web'
   datosHTML = URI.open(pagina)
@@ -47,10 +47,10 @@ uno = consultaUno()
 puts 'Provincias en ecuador en donde existen trabajos de desarrollo web '
 puts uno
 puts
-puts
+# puts
 
 
-# ¿Cuáles son las empresas destacadas que están enlazadas con la plataforma? 
+# ¿Donde se encuentrasn ubicadas las empresas que ofertan trabajos para programadores Junior? 
 
 def consultaDos
   pagina = 'https://ec.jooble.org/SearchResult?p=2&ukw=programador%20junior'
@@ -98,6 +98,19 @@ def consultaDos
     end
   end
   my_hash
+  # L = []
+  encabezado = ['empresa','oferta', 'ciudad', 'pais']
+  CSV.open('analisis2.csv', 'w+', write_headers: true, headers: encabezado) do |csv|
+    my_hash.each do |empresa, valor|
+      puts "#{empresa} : "
+      
+      csv << [empresa, valor[0], valor[1].split(',')[0], 'Ecuador']
+
+        
+    end
+  end  
+
+
 end
 dos = consultaDos
 
@@ -124,6 +137,15 @@ def consultaTres
     my_hash[empresa] = [link, tiempo]
   end
   my_hash
+  encabezado = ['empresa','link', 'tiempo']
+  CSV.open('analisis3.csv', 'w+', write_headers: true, headers: encabezado) do |csv|
+    my_hash.each do |empresa, valor|
+      
+      csv << [empresa, valor[0], valor[1]]
+
+        
+    end
+  end  
 end
 tres = consultaTres
 puts  

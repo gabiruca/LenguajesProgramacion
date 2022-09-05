@@ -10,12 +10,35 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 #Llamada a ventanas(clases)
+from screen1 import Ui_analisis1
+from screen2 import Ui_analisis2
+from screen3 import Ui_analisis3
 from screen4 import Ui_analisis4
 from screen5 import Ui_analisis5
 from screen6 import Ui_analisis6
+import mapa1
 
 class Ui_MainWindow(object):
         #Funciones analisis
+    def openAna1(self):
+        self.window=QtWidgets.QMainWindow()
+        self.ui=Ui_analisis1()
+        self.ui.setupUi(self.window)
+        self.window.show()
+        
+    def openAna2(self):
+        self.window=QtWidgets.QMainWindow()
+        self.ui=Ui_analisis2()
+        self.ui.setupUi(self.window)
+        self.window.show()
+        
+    def openAna3(self):
+        mapa1
+#         self.window=QtWidgets.QMainWindow()
+#         self.ui=Ui_analisis3()
+#         self.ui.setupUi(self.window)
+#         self.window.show()        
+        
     def openAna4(self):
         self.window=QtWidgets.QMainWindow()
         self.ui=Ui_analisis4()
@@ -50,21 +73,21 @@ class Ui_MainWindow(object):
 "font: 75 28pt \"Comic Sans MS\";\n"
 "")
         self.label.setObjectName("label")
-        self.pushButton = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton = QtWidgets.QPushButton(self.centralwidget,clicked= lambda: self.openAna1())
         self.pushButton.setGeometry(QtCore.QRect(200, 210, 171, 61))
         self.pushButton.setStyleSheet("background-color: rgb(255, 255, 255);\n"
 "color: rgb(150, 129, 255);\n"
 "font: 60 18pt \"Rockwell\";\n"
 "border-color: rgb(180, 126, 255);")
         self.pushButton.setObjectName("pushButton")
-        self.pushButton_2 = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton_2 = QtWidgets.QPushButton(self.centralwidget,clicked= lambda: self.openAna2())
         self.pushButton_2.setGeometry(QtCore.QRect(200, 360, 171, 61))
         self.pushButton_2.setStyleSheet("background-color: rgb(255, 255, 255);\n"
 "color: rgb(150, 129, 255);\n"
 "font: 60 18pt \"Rockwell\";\n"
 "border-color: rgb(180, 126, 255);")
         self.pushButton_2.setObjectName("pushButton_2")
-        self.pushButton_3 = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton_3 = QtWidgets.QPushButton(self.centralwidget,clicked= mapa1.cargar)
         self.pushButton_3.setGeometry(QtCore.QRect(200, 510, 171, 61))
         self.pushButton_3.setStyleSheet("background-color: rgb(255, 255, 255);\n"
 "color: rgb(150, 129, 255);\n"
